@@ -3,7 +3,8 @@ import fal_client
 import requests
 import os
 
-api = 'cef3f863-e20f-4a0e-93db-2ec264b2836b:11be2dd8fe29b6b8577558e4b1c4897f'
+api = '3f51e6d3-95fc-4e05-92be-7d8af9ec4847:b5dead8944d8f01002aff2f0e195b1c1'
+
 os.environ['FAL_KEY'] = api
 
 def upload(image_address):
