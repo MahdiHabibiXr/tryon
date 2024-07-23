@@ -39,13 +39,14 @@ def swap(base, face):
 
     return result
 
-def tryon(person, garment, description):
+def tryon(person, garment, description, type):
     result = fal_client.run(
         "fal-ai/idm-vton",
         arguments={
             "human_image_url": person,
             "garment_image_url": garment,
-            "description": description
+            "description": description,
+            "garment_type" : type
         },
     )
 

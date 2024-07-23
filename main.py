@@ -8,9 +8,9 @@ import requests
 from io import BytesIO
 
 # bot_api = '6752497249:AAE_1UP_pVxNd3vMsKXnIA6QEbvIGRplUfU'
-bot = Client('mahdi',api_id=863373,api_hash='c9f8495ddd20615835d3fd073233a3f6')
+# bot = Client('mahdi',api_id=863373,api_hash='c9f8495ddd20615835d3fd073233a3f6')
 root = 'files/'
-# bot = Client('mahdi')
+bot = Client('mahdi')
 STEP = 'home'
 
 @bot.on_message(filters.command('test') & filters.private)
@@ -49,7 +49,7 @@ async def image(client, message):
         elif(os.path.exists(f'{user_root}person.jpg') and not os.path.exists(f'{user_root}garment.jpg')):
             #sent garment
             file_name = 'garment.jpg'
-            await message.reply('Ok now use the command /imagine and describe the garment in order to generate the photo, example \n /imagine black t shirt')
+            await message.reply('Ok now use the command /imagine_upper (for upperbody garment) or /imagine_lower (for lowerbody garment) and describe the garment in order to generate the photo, example \n /imagine_upper black t shirt')
         
             
         file = await client.download_media(message.photo.file_id, file_name = f'{user_root}{file_name}')
@@ -68,16 +68,25 @@ async def edit_image(client, message):
 
     await message.reply('Ok, Please me a photo of the person you want to try on it.')
 
-@bot.on_message(filters.private & filters.regex('/imagine'))
+@bot.on_message(filters.private & filters.regex('/imagine_'))
 async def imagine(client, message):
 
     chat_id = message.chat.id
     person_img = f'{root}{chat_id}/person.jpg'
     garment_img = f'{root}{chat_id}/garment.jpg'
-    description = message.text.replace('/imagine', '')
+    description = ''
+    garment_type = ''#upper_body lower_body dress
+
+    if(message.text.startswith('/imagine_upper')): 
+        garment_type = 'upper_body'
+        description = message.text.replace('/imagine_upper', '')
+
+    elif(message.text.startswith('/imagine_lower')): 
+        garment_type = 'lower_body'
+        description = message.text.replace('/imagine_lower', '')
 
     if(os.path.exists(person_img) and os.path.exists(garment_img)):
-        if(description):
+        if(description and garment_type):
             #generate image
             person_url = upload(person_img)
             garment_url = upload(garment_img)
@@ -85,7 +94,7 @@ async def imagine(client, message):
             # await message.reply(garment_url)
             await message.reply(f'Generating your image**{description}**, it can take up to 1 min, Please wait')
 
-            img, msk = tryon(person_url, garment_url, description)
+            img, msk = tryon(person_url, garment_url, description, garment_type)
             downloaded_path = download_image(img, chat_id)
             await client.send_photo(chat_id, downloaded_path, caption='You generated image')
 
