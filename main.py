@@ -8,9 +8,9 @@ import requests
 from io import BytesIO
 
 # bot_api = '6752497249:AAE_1UP_pVxNd3vMsKXnIA6QEbvIGRplUfU'
-# bot = Client('mahdi',api_id=863373,api_hash='c9f8495ddd20615835d3fd073233a3f6')
+bot = Client('mahdi',api_id=863373,api_hash='c9f8495ddd20615835d3fd073233a3f6')
 root = 'files/'
-bot = Client('mahdi')
+# bot = Client('mahdi')
 STEP = 'home'
 
 @bot.on_message(filters.command('test') & filters.private)
