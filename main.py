@@ -49,7 +49,7 @@ async def image(client, message):
         elif(os.path.exists(f'{user_root}person.jpg') and not os.path.exists(f'{user_root}garment.jpg')):
             #sent garment
             file_name = 'garment.jpg'
-            await message.reply('Ok now use the command /imagine_upper (for upperbody garment) or /imagine_lower (for lowerbody garment) and describe the garment in order to generate the photo, example \n /imagine_upper black t shirt')
+            await message.reply('Ok now use the command /imagine_upper (for upperbody garment) or /imagine_lower (for lowerbody garment) or /imagine_dress (for dress garment) and describe the garment in order to generate the photo, example \n /imagine_upper black t shirt')
         
             
         file = await client.download_media(message.photo.file_id, file_name = f'{user_root}{file_name}')
@@ -85,6 +85,10 @@ async def imagine(client, message):
         garment_type = 'lower_body'
         description = message.text.replace('/imagine_lower', '')
 
+    elif(message.text.startswith('/imagine_dress')): 
+        garment_type = 'dress'
+        description = message.text.replace('/imagine_dress', '')
+
     if(os.path.exists(person_img) and os.path.exists(garment_img)):
         if(description and garment_type):
             #generate image
@@ -105,7 +109,7 @@ async def imagine(client, message):
             # await message.reply(msk)
 
         else:
-            await message.reply('You should send description for the garment with this format : /imagine black shirt')
+            await message.reply('You should send description for the garment with this format : /imagine_upper black shirt')
     else:
         await message.reply('You should submit both person and garment images, Use /images to check ')
     
