@@ -1,0 +1,5 @@
+TgCrypto
+pyrogram
+pillow
+fal-client
+requests
