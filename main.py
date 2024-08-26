@@ -145,6 +145,16 @@ async def resize(client, message):
     resized = resize_image(person_img, target)
     await client.send_photo(chat_id, resized, caption='resized image')
 
+@bot.on_message(filters.private & filters.command('run_auto_on'))
+def run_auto_on(client, message):
+    os.environ['BACKEND_ON'] = 'True'
+    message.reply('Running through tasks, now run /run_auto')
+
+@bot.on_message(filters.private & filters.command('run_auto_off'))
+def run_auto_on(client, message):
+    os.environ['BACKEND_ON'] = 'False'
+    message.reply('Tasks not doing enymore, to turn on /run_auto_on')
+    
 def download_image(url, id):
     response = requests.get(url)
     image = Image.open(BytesIO(response.content))
