@@ -6,6 +6,7 @@ import time
 import models
 from PIL import Image 
 import requests
+from io import BytesIO
 
 admin = 791927771
 bot = Client('mahdi2',api_id=863373,api_hash='c9f8495ddd20615835d3fd073233a3f6' )
