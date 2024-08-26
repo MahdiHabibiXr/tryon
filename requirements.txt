@@ -3,3 +3,4 @@ pyrogram
 pillow
 fal-client
 requests
+schedule
