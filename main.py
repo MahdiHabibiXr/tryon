@@ -102,11 +102,11 @@ async def imagine(client, message):
                 #adding a task
                 with open(task_path, 'w') as file:
 
-                    file.write(description)     #description
-                    file.write(garment_type)    #type
-                    file.write(person_url)      #person
-                    file.write(garment_url)     #cloth
-                    file.write(str(chat_id))    #user
+                    file.write(description + '\n')     #description
+                    file.write(garment_type + '\n')    #type
+                    file.write(person_url + '\n')      #person
+                    file.write(garment_url + '\n')     #cloth
+                    file.write(str(chat_id) + '\n')    #user
                     
 
                 # #generate image
