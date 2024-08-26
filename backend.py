@@ -27,7 +27,7 @@ async def task_run(client,message):
         tasks = [os.path.join(tasks_path, f) for f in os.listdir(tasks_path) if os.path.isfile(os.path.join(tasks_path, f))]
         
         for task in tasks :
-            with open('three_lines.txt', 'r') as file:
+            with open(task, 'r') as file:
                 content = file.read()
                 lines = content.splitlines()
 
