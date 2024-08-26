@@ -76,7 +76,7 @@ async def imagine(client, message):
     garment_img = f'{root}{chat_id}/garment.jpg'
     description = ''
     garment_type = ''#upper_body lower_body dress
-
+    
     if(message.text.startswith('/imagine_upper')): 
         garment_type = 'upper_body'
         description = message.text.replace('/imagine_upper', '')
@@ -91,19 +91,34 @@ async def imagine(client, message):
 
     if(os.path.exists(person_img) and os.path.exists(garment_img)):
         if(description and garment_type):
-            #generate image
-            person_url = upload(person_img)
-            garment_url = upload(garment_img)
-            # await message.reply(person_url)
-            # await message.reply(garment_url)
-            await message.reply(f'Generating your image**{description}**, it can take up to 1 min, Please wait')
+            task_path = f'tasks/{chat_id}.txt'
 
-            img, msk = tryon(person_url, garment_url, description, garment_type)
-            downloaded_path = download_image(img, chat_id)
-            await client.send_photo(chat_id, downloaded_path, caption='You generated image')
+            if(os.path.exists(task_path)):
+                message.reply('You have a pending request ....')
+            else:
+                person_url = upload(person_img)
+                garment_url = upload(garment_img)
 
-            resized = resize_image(person_img ,downloaded_path)
-            await client.send_photo(chat_id, resized, caption='your resized image')
+                #adding a task
+                with open(task_path, 'w') as file:
+
+                    file.write(description)     #description
+                    file.write(garment_type)    #type
+                    file.write(person_url)      #person
+                    file.write(garment_url)     #cloth
+                    file.write(chat_id)         #user
+                    
+
+                # #generate image
+
+                await message.reply(f'Generating your image**{description}**, it can take up to 1 min, Please wait')
+
+                # img, msk = tryon(person_url, garment_url, description, garment_type)
+                # downloaded_path = download_image(img, chat_id)
+                # await client.send_photo(chat_id, downloaded_path, caption='You generated image')
+
+                # resized = resize_image(person_img ,downloaded_path)
+                # await client.send_photo(chat_id, resized, caption='your resized image')
 
             # await message.reply(img)
             # await message.reply(msk)
@@ -154,7 +169,7 @@ def run_auto_on(client, message):
 def run_auto_on(client, message):
     os.environ['BACKEND_ON'] = 'False'
     message.reply('Tasks not doing enymore, to turn on /run_auto_on')
-    
+
 def download_image(url, id):
     response = requests.get(url)
     image = Image.open(BytesIO(response.content))
