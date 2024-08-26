@@ -4,7 +4,8 @@ import os
 from datetime import datetime
 import time
 import models
-from main import download_image, resize_image
+from PIL import Image 
+import requests
 
 admin = 791927771
 bot = Client('mahdi2',api_id=863373,api_hash='c9f8495ddd20615835d3fd073233a3f6' )
@@ -65,5 +66,35 @@ async def task_run(client,message):
             os.remove(f'tasks/{user}.txt')
 
 
+def download_image(url, id):
+    response = requests.get(url)
+    image = Image.open(BytesIO(response.content))
+
+    count = len(os.listdir('outputs/')) + 1
+    filename = f"outputs/{id}-{count}.jpg"
+
+    image.save(filename)
+    print(f'Image successfully downloaded and saved as {filename}')
+
+    return filename
+
+def resize_image(target, source):
+    # Open the target image and the source image
+    target_image = Image.open(target)
+    source_image = Image.open(source)
+
+    # Get the size of the target image
+    target_size = target_image.size
+
+    # Resize the source image to match the size of the target image
+    resized_source_image = source_image.resize(target_size)
+
+    # Save the resized image (optional)
+    resized_source_image.save(source)
+
+    # Display the resized image (optional)
+    resized_source_image.show()
+
+    return(source)
 
 bot.run()
