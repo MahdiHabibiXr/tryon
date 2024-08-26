@@ -64,7 +64,7 @@ async def task_run(client,message):
             print('sleep for 5 sec')
             time.sleep(20)
             await message.reply('done task ' + task)
-            os.remove(f'tasks/{user}.txt')
+            # os.remove(f'tasks/{user}.txt')
 
 
 def download_image(url, id):
