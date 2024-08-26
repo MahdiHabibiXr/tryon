@@ -106,7 +106,7 @@ async def imagine(client, message):
                     file.write(garment_type)    #type
                     file.write(person_url)      #person
                     file.write(garment_url)     #cloth
-                    file.write(chat_id)         #user
+                    file.write(str(chat_id))    #user
                     
 
                 # #generate image
