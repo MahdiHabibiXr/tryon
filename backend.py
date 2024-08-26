@@ -23,11 +23,6 @@ async def task_run(client,message):
     print('Going to run tasks : ')
 
     while(True):
-        running_status = os.environ['BACKEND_ON']
-
-        if(running_status == 'False') :
-            print('BREAKING LOOP') 
-            break
 
         tasks = [os.path.join(tasks_path, f) for f in os.listdir(tasks_path) if os.path.isfile(os.path.join(tasks_path, f))]
         
