@@ -94,7 +94,7 @@ async def imagine(client, message):
             task_path = f'tasks/{chat_id}.txt'
 
             if(os.path.exists(task_path)):
-                message.reply('You have a pending request ....')
+                await message.reply('You have a pending request ....')
             else:
                 person_url = upload(person_img)
                 garment_url = upload(garment_img)
